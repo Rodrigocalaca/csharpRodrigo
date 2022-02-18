@@ -1,0 +1,15 @@
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\bin\Debug\net6.0\BoletimAluno.exe
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\bin\Debug\net6.0\BoletimAluno.deps.json
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\bin\Debug\net6.0\BoletimAluno.runtimeconfig.json
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\bin\Debug\net6.0\BoletimAluno.dll
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\bin\Debug\net6.0\ref\BoletimAluno.dll
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\bin\Debug\net6.0\BoletimAluno.pdb
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.AssemblyInfoInputs.cache
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.AssemblyInfo.cs
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.csproj.CoreCompileInputs.cache
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.dll
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\ref\BoletimAluno.dll
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.pdb
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.genruntimeconfig.cache
+C:\Users\EscolarManager\Desktop\Projetos\BoletimAluno\obj\Debug\net6.0\BoletimAluno.csproj.AssemblyReference.cache
