@@ -23,13 +23,8 @@ namespace RelatorioAlunos
             get { return _nome; }
         }
 
-        public double Media
-        {
-            get
-            {
-                return (p1 + p2) / 2;
-            }
-        }
+        public double Media => (p1 + p2) / 2;
+        
 
         public bool Aprovado
         {

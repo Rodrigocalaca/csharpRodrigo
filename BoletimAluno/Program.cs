@@ -99,11 +99,32 @@ namespace RelatorioAlunos
                         Console.WriteLine("Insira o nome do aluno que deseja excluir: ");
                         string tirarAluno = Console.ReadLine();
 
-                        foreach(Aluno a in alunos)
+                        foreach(Aluno aluno1 in alunos)
                         {
-                            if(a.Nome == tirarAluno)
+                            if(aluno1.Nome == tirarAluno)
                             {
-                                alunos.Remove(a);
+                                alunos.Remove(aluno1);
+                                foreach (Aluno a in alunos)
+                                {
+                                    if (a.Aprovado)
+                                    {
+                                        Console.WriteLine("Aluno: {0} - Media: {1}", a.Nome, a.Media);
+                                        Console.WriteLine();
+                                    }
+                                }
+
+                                Console.WriteLine();
+                                Console.WriteLine("Alunos Reprovados");
+                                Console.WriteLine("================================================");
+                                Console.WriteLine();
+                                foreach (Aluno a in alunos)
+                                {
+                                    if (!a.Aprovado)
+                                    {
+                                        Console.WriteLine("Aluno: {0} - Media: {1}", a.Nome, a.Media);
+                                        Console.WriteLine();
+                                    }
+                                }
 
                             }
                             else
