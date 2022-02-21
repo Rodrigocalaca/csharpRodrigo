@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace RelatorioAlunos
 {
@@ -19,6 +20,7 @@ namespace RelatorioAlunos
             this.p2 = p2;
             this._matricula = matricula;
         }
+
 
         public string Nome
         {

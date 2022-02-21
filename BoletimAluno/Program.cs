@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace RelatorioAlunos
 {
@@ -12,8 +13,9 @@ namespace RelatorioAlunos
         {
             List<Aluno> alunos = new List<Aluno>();
             string continuar = "SIM";
-            string opcao = ObterOpcaoMenu();
             string teste = "SIM";
+            string opcao = ObterOpcaoMenu();
+            
 
 
             while (true)
@@ -99,11 +101,14 @@ namespace RelatorioAlunos
                         }
                     }
                     if (opcao == "3")
-                    {
+                    {                        
+                        
                         if (teste.ToUpper() == "SIM" || teste.ToUpper() == "NAO")
                         {
+                            
                             if (teste.ToUpper() == "SIM")
                             {
+                                
                                 Console.WriteLine("Digite o nome do aluno que deseja remover: ");
                                 string tirarAluno = Console.ReadLine();
                                 foreach (Aluno aluno in alunos.ToArray())
@@ -187,8 +192,7 @@ namespace RelatorioAlunos
 
                 if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu.ToUpper() == "X")
                 {
-                    return opcaoMenu;
-                    break;
+                    return opcaoMenu;                   
                 }
                 else
                 {
@@ -198,4 +202,13 @@ namespace RelatorioAlunos
         }
     }
 }
-  
+
+
+/// to do list
+///  - validação das entradas na opção 1
+///  - invalidar a escolha da opção 3 quando não foi cadastrado nenhum aluno
+///  - perguntar sobre o BDD 
+///  - estudar a possibilidade de fazer uma função que reduz o número de testes feitos dentro do código
+
+
+
