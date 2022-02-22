@@ -9,11 +9,10 @@ namespace RelatorioAlunos
 {
     class Aluno
     {
-        private string _nome;
+        private string _nome, _matricula;
         private double p1, p2;
-        private int _matricula;
 
-        public Aluno(string nome, double p1, double p2, int matricula)
+        public Aluno(string nome, double p1, double p2, string matricula)
         {
             this._nome = nome;
             this.p1 = p1;
@@ -27,7 +26,7 @@ namespace RelatorioAlunos
             get { return _nome; }
         }
 
-        public int Matricula
+        public string Matricula
         {
             get { return _matricula; }
         }

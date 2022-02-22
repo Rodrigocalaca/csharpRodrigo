@@ -12,21 +12,19 @@ namespace RelatorioAlunos
         static void Main(string[] args)
         {
             List<Aluno> alunos = new List<Aluno>();
-            string continuar = "1";
             string opcao = ObterOpcaoMenu();
+            bool finalizando = true;
             
 
 
             while (true)
-            {               
-                if (continuar == "1" || continuar == "2")
+            {
+                switch (opcao)
                 {
-
-                    if (opcao == "1")
-                    {
+                    case "1":
                         Console.WriteLine("Digite a matricula: ");
-                        
-                        int matricula = int.Parse(Console.ReadLine());
+
+                        string matricula = Console.ReadLine();
                         Console.WriteLine("Digite o nome: ");
                         string nome = Console.ReadLine();
                         Console.WriteLine("Nota 1: ");
@@ -37,7 +35,7 @@ namespace RelatorioAlunos
                         Aluno novo = new Aluno(nome, p1, p2, matricula);
                         alunos.Add(novo);
 
-                        continuar = obterValidacaoResposta();
+                        string continuar = obterValidacaoResposta();
                         if (continuar == "1")
                         {
                             opcao = "1";
@@ -46,16 +44,12 @@ namespace RelatorioAlunos
                         {
                             opcao = ObterOpcaoMenu();
                         }
-                        else if(continuar.ToUpper() == "X")
+                        else if (continuar.ToUpper() == "X")
                         {
-                            break;
+                            opcao = "X";
                         }
-                        
-
-                    }
-                    else if (opcao == "2")
-                    {
-
+                        break;
+                    case "2":
                         Console.WriteLine();
                         Console.WriteLine("Alunos aprovados");
                         Console.WriteLine("================================================");
@@ -93,72 +87,80 @@ namespace RelatorioAlunos
                         }
                         else if (continuar.ToUpper() == "X")
                         {
-                            Console.WriteLine("Finalizando o processo...");
-                            break;
+                            opcao = "X";
                         }
-                    }
-                    else if (opcao == "3")
-                    {
-                        Console.WriteLine("Digite o nome do aluno que deseja remover: ");
-                        string tirarAluno = Console.ReadLine();
-                        foreach (Aluno aluno in alunos.ToArray())
+                        break;
+                    case "3":
+                        if (alunos.Count == 0)
                         {
-                            if (aluno.Nome != tirarAluno)
-                            {
-                                Console.WriteLine("Aluno não encontrado");
-                            }
-                            else if (aluno.Nome == tirarAluno)
-                            {
-                                alunos.RemoveAll(aluno => aluno.Nome.Equals(tirarAluno));
-                                Console.WriteLine();
-                                Console.WriteLine("Alunos aprovados");
-                                Console.WriteLine("================================================");
-                                Console.WriteLine();
-
-                                foreach (Aluno a in alunos)
-                                {
-                                    if (a.Aprovado)
-                                    {
-                                        Console.WriteLine("Matricula: {0} - Aluno: {1} - Media: {2}", a.Matricula, a.Nome, a.Media);
-                                        Console.WriteLine();
-                                    }
-                                }
-
-                                Console.WriteLine();
-                                Console.WriteLine("Alunos Reprovados");
-                                Console.WriteLine("================================================");
-                                Console.WriteLine();
-                                foreach (Aluno a in alunos)
-                                {
-                                    if (!a.Aprovado)
-                                    {
-                                        Console.WriteLine("Matricula: {0} - Aluno: {1} - Media: {2}", a.Matricula, a.Nome, a.Media);
-                                        Console.WriteLine();
-                                    }
-                                }
-                            }
-
-                        }
-                        continuar = obterValidacaoResposta();
-                        if (continuar == "1")
-                        {
-                            opcao = "3";
-                        }
-                        else if (continuar == "2")
-                        {
+                            Console.WriteLine("Não há nenhum aluno cadastrado");
                             opcao = ObterOpcaoMenu();
                         }
-                        else if (continuar.ToUpper() == "X")
+                        else
                         {
-                            Console.WriteLine("Finalizando o processo...");
-                            break;
+                            Console.WriteLine("Digite a matricula do aluno que deseja remover: ");
+                            string tirarAluno = Console.ReadLine();
+                            foreach (Aluno aluno in alunos.ToArray())
+                            {
+                                if (aluno.Matricula != tirarAluno)
+                                {
+                                    Console.WriteLine("Aluno não encontrado");
+                                }
+                                else if (aluno.Matricula == tirarAluno)
+                                {
+                                    alunos.RemoveAll(aluno => aluno.Matricula.Equals(tirarAluno));
+                                    Console.WriteLine();
+                                    Console.WriteLine("Alunos aprovados");
+                                    Console.WriteLine("================================================");
+                                    Console.WriteLine();
+
+                                    foreach (Aluno a in alunos)
+                                    {
+                                        if (a.Aprovado)
+                                        {
+                                            Console.WriteLine("Matricula: {0} - Aluno: {1} - Media: {2}", a.Matricula, a.Nome, a.Media);
+                                            Console.WriteLine();
+                                        }
+                                    }
+
+                                    Console.WriteLine();
+                                    Console.WriteLine("Alunos Reprovados");
+                                    Console.WriteLine("================================================");
+                                    Console.WriteLine();
+                                    foreach (Aluno a in alunos)
+                                    {
+                                        if (!a.Aprovado)
+                                        {
+                                            Console.WriteLine("Matricula: {0} - Aluno: {1} - Media: {2}", a.Matricula, a.Nome, a.Media);
+                                            Console.WriteLine();
+                                        }
+                                    }
+                                }
+                                continuar = obterValidacaoResposta();
+                                if (continuar == "1")
+                                {
+                                    opcao = "3";
+                                }
+                                else if (continuar == "2")
+                                {
+                                    opcao = ObterOpcaoMenu();
+                                }
+                                else if (continuar.ToUpper() == "X")
+                                {
+                                    opcao = "X";
+                                }
+                            }
                         }
-                    }
-                    else if (opcao.ToUpper() == "X")
-                    {
-                        Console.WriteLine("Finalizando o processo...");
                         break;
-                    }
+                    case "X":
+                        Console.WriteLine("Finalizando o processo...");
+                        finalizando = false;
+                        break;
+                        
+                }
+                if (!finalizando)
+                {
+                    break;
                 }
             }
         }
@@ -174,7 +176,7 @@ namespace RelatorioAlunos
                 Console.WriteLine("[X] - Sair");
                 Console.WriteLine("----------------------------------");
 
-                string opcaoMenu = Console.ReadLine();
+                string opcaoMenu = Console.ReadLine().ToUpper();
 
                 if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu.ToUpper() == "X")
                 {
@@ -197,7 +199,7 @@ namespace RelatorioAlunos
                 Console.WriteLine("[X] - Sair do programa");
                 Console.WriteLine("----------------------------------");
 
-                string validarResposta = Console.ReadLine();
+                string validarResposta = Console.ReadLine().ToUpper();
 
                 if (validarResposta == "1" || validarResposta == "2" || validarResposta.ToUpper() == "X")
                 {
@@ -215,9 +217,6 @@ namespace RelatorioAlunos
 
 /// to do list
 ///  - validação das entradas na opção 1
-///  - invalidar a escolha da opção 3 quando não foi cadastrado nenhum aluno
-///  - perguntar sobre o BDD 
-///  - estudar a possibilidade de fazer uma função que reduz o número de testes feitos dentro do código
 
 
 
