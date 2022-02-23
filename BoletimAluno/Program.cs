@@ -5,55 +5,100 @@
         static void Main()
         {
             List<Aluno> alunos = new();
-            var opcao = ObtenhaOpcaoSelecionada();
+            var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             bool estaFinalizando = true;
 
 
 
             while (estaFinalizando)
             {
-                switch (opcao)
+                switch (opcaoMenu)
                 {
                     case "1":
                         Console.WriteLine("Digite a matricula: ");
-                        string? matricula = Console.ReadLine();
-                        foreach(Aluno aluno in alunos)
+                        string matricula = Console.ReadLine() ?? "";
+                        foreach (Aluno aluno in alunos)
                         {
-                            if(matricula == aluno.Matricula)
+                            while (aluno.Matricula == matricula)
                             {
-                                Console.WriteLine("Essa matricula já foi inserida. Tente novamente");
+                                Console.WriteLine("Essa matricula já foi cadastrada");
                                 Console.WriteLine("Digite a matricula: ");
-                                matricula = Console.ReadLine();
-
-                            }
-                            else
-                            {
-                                matricula = matricula.Trim();
+                                matricula = Console.ReadLine() ?? "";
                             }
                         }
+                        while (matricula == null || matricula.Length < 1)
+                        {
+                            Console.WriteLine("Insira uma matricula válida");
+                            Console.WriteLine("Digite a matricula: ");
+                            matricula = Console.ReadLine() ?? "";
+                        }
                         Console.WriteLine("Digite o nome: ");
-                        string? nomeAluno = Console.ReadLine();
+                        string nomeAluno = Console.ReadLine() ?? "";
+                        while (nomeAluno == null || nomeAluno.Length < 1)
+                        {
+                            Console.WriteLine("Digite um nome válido");
+                            Console.WriteLine("Digite o nome: ");
+                            nomeAluno = Console.ReadLine() ?? "";
+
+                        }
                         Console.WriteLine("Nota 1: ");
-                        string? s = Console.ReadLine();
-                        double primeiraProva = double.Parse(s);
+                        double nota1 = 0;
+                        while(true){
+                            try
+                            {
+                                nota1 = double.Parse(Console.ReadLine() ?? "");
+                                break;
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Insira uma nota válida\nNota 1: ");  
+                            }
+                        }
+                        while (nota1 < 0 || nota1 > 10)
+                        {
+                            Console.WriteLine("Insira uma nota válida");
+                            Console.WriteLine("Nota 1: ");
+                            nota1 = double.Parse(Console.ReadLine() ?? "");
+
+                        }
                         Console.WriteLine("Nota 2: ");
-                        string? s1 = Console.ReadLine();
-                        double segundaProva = double.Parse(s1);
+                        double nota2 = 0;
+                        while (true)
+                        {
+                            try
+                            {
+                                nota2 = double.Parse(Console.ReadLine() ?? "");
+                                break;
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine("Insira uma nota válida\nNota 2: ");
+                            }
+                        }
+                        while (nota2 < 0 || nota2 > 10)
+                        {
+                            Console.WriteLine("Insira uma nota válida");
+                            Console.WriteLine("Nota 2: ");
+                            nota2 = double.Parse(Console.ReadLine() ?? "");
 
-                        Aluno novo = new(nomeAluno, primeiraProva, segundaProva, matricula);
-                        alunos.Add(novo);
+                        }
 
-                        var continuar = obterValidacaoResposta().ToUpper();
+
+                        Aluno novoAluno = new(nomeAluno, nota1, nota2, matricula);
+                        alunos.Add(novoAluno);
+
+
+                        var continuar = ObtenhaMenuDeContinuacao().ToUpper();
                         switch (continuar)
                         {
                             case "1":
-                                opcao = "1";
+                                opcaoMenu = "1";
                                 break;
                             case "2":
-                                opcao = ObtenhaOpcaoSelecionada();
+                                opcaoMenu = ObtenhaOpcaoSelecionada();
                                 break;
                             case "X":
-                                opcao = "X";
+                                opcaoMenu = "X";
                                 break;
                         }
                         break;
@@ -61,7 +106,7 @@
                         if (alunos.Count == 0)
                         {
                             Console.WriteLine("Não há nenhum aluno cadastrado");
-                            opcao = ObtenhaOpcaoSelecionada();
+                            opcaoMenu = ObtenhaOpcaoSelecionada();
                         }
                         else
                         {
@@ -70,12 +115,12 @@
                             Console.WriteLine("================================================");
                             Console.WriteLine();
 
-                            foreach (Aluno a in alunos)
+                            foreach (Aluno aluno in alunos)
                             {
-                                if (a.Aprovado)
+                                if (aluno.Aprovado)
                                 {
                                     Console.WriteLine();
-                                    Console.WriteLine($"Matricula: {a.Matricula} - Aluno: {a.Nome} - Media: {a.Media}");
+                                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
                                     Console.WriteLine();
                                 }
                             }
@@ -84,26 +129,26 @@
                             Console.WriteLine("Alunos Reprovados");
                             Console.WriteLine("================================================");
                             Console.WriteLine();
-                            foreach (Aluno a in alunos)
+                            foreach (Aluno aluno in alunos)
                             {
-                                if (!a.Aprovado)
+                                if (!aluno.Aprovado)
                                 {
                                     Console.WriteLine();
-                                    Console.WriteLine($"Matricula: {a.Matricula} - Aluno: {a.Nome} - Media: {a.Media}");
+                                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
                                     Console.WriteLine();
                                 }
                             }
-                            continuar = obterValidacaoResposta().ToUpper();
+                            continuar = ObtenhaMenuDeContinuacao().ToUpper();
                             switch (continuar)
                             {
                                 case "1":
-                                    opcao = "2";
+                                    opcaoMenu = "2";
                                     break;
                                 case "2":
-                                    opcao = ObtenhaOpcaoSelecionada();
+                                    opcaoMenu = ObtenhaOpcaoSelecionada();
                                     break;
                                 case "X":
-                                    opcao = "X";
+                                    opcaoMenu = "X";
                                     break;
                             }
                         }
@@ -112,39 +157,41 @@
                         if (alunos.Count == 0)
                         {
                             Console.WriteLine("Não há nenhum aluno cadastrado");
-                            opcao = ObtenhaOpcaoSelecionada();
+                            opcaoMenu = ObtenhaOpcaoSelecionada();
                         }
                         else
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja buscar: ");
-                            string? v = Console.ReadLine();
-                            string matriculaAPesquisar = v;
-                            // bool matriculaFoiLocalizada = alunos.Find(a => a.m)
-                            foreach (Aluno aluno in alunos)
+                            string? matriculaAPesquisar = Console.ReadLine();
+                            IEnumerable<Aluno> alunoPesquisado =
+                                from alunosPesquisados in alunos
+                                where alunosPesquisados.Matricula == matriculaAPesquisar
+                                select alunosPesquisados;
+
+                            foreach(Aluno aluno in alunoPesquisado)
                             {
-                                if (aluno.Matricula == matriculaAPesquisar)
-                                {
-                                    Console.WriteLine();
-                                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-                                    Console.WriteLine();
-                                    Console.WriteLine($"As notas são:\nP1: {aluno.PrimeiraProva}\nP2: {aluno.SegundaProva}");
-                                }
-                                else
-                                {
-                                    Console.WriteLine("Aluno não encontrado");
-                                }
+                                Console.WriteLine();
+                                Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
+                                Console.WriteLine();
+                                Console.WriteLine($"As notas são:\nP1: {aluno.PrimeiraProva}\nP2: {aluno.SegundaProva}");
                             }
-                            continuar = obterValidacaoResposta().ToUpper();
+                            if (alunoPesquisado.Count() == 0)
+                            {
+                                Console.WriteLine("Não foi possível localizar esse aluno. Tente novamente");
+                            }
+
+
+                            continuar = ObtenhaMenuDeContinuacao().ToUpper();
                             switch (continuar)
                             {
                                 case "1":
-                                    opcao = "3";
+                                    opcaoMenu = "3";
                                     break;
                                 case "2":
-                                    opcao = ObtenhaOpcaoSelecionada();
+                                    opcaoMenu = ObtenhaOpcaoSelecionada();
                                     break;
                                 case "X":
-                                    opcao = "X";
+                                    opcaoMenu = "X";
                                     break;
                             }
                         }
@@ -154,65 +201,38 @@
                         if (alunos.Count == 0)
                         {
                             Console.WriteLine("Não há nenhum aluno cadastrado");
-                            opcao = ObtenhaOpcaoSelecionada();
+                            opcaoMenu = ObtenhaOpcaoSelecionada();
                         }
                         else
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja remover: ");
-                            string? v = Console.ReadLine();
-                            string tirarAluno = v;
+                            string matriculaASerRetirada = Console.ReadLine() ?? "";
                             foreach (Aluno aluno in alunos.ToArray())
-                            {                               
-                                if (aluno.Matricula == tirarAluno)
-                                {
-                                    alunos.RemoveAll(aluno => aluno.Matricula.Equals(tirarAluno));
-                                    Console.WriteLine();
-                                    Console.WriteLine("Alunos aprovados");
-                                    Console.WriteLine("================================================");
-                                    Console.WriteLine();
-
-                                    foreach (Aluno a in alunos)
-                                    {
-                                        if (a.Aprovado)
-                                        {
-                                            Console.WriteLine();
-                                            Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-                                            Console.WriteLine();
-                                        }
-                                    }
-
-                                    Console.WriteLine();
-                                    Console.WriteLine("Alunos Reprovados");
-                                    Console.WriteLine("================================================");
-                                    Console.WriteLine();
-                                    foreach (Aluno a in alunos)
-                                    {
-                                        if (!a.Aprovado)
-                                        {
-                                            Console.WriteLine();
-                                            Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-                                            Console.WriteLine();
-                                        }
-                                    }
-                                }
-                                else
+                            {
+                                if (aluno.Matricula != matriculaASerRetirada)
                                 {
                                     Console.WriteLine("Aluno não encontrado");
                                 }
-                                continuar = obterValidacaoResposta().ToUpper();
-                                switch (continuar)
+                                else if (aluno.Matricula == matriculaASerRetirada)
                                 {
-                                    case "1":
-                                        opcao = "4";
-                                        break;
-                                    case "2":
-                                        opcao = ObtenhaOpcaoSelecionada();
-                                        break;
-                                    case "X":
-                                        opcao = "X";
-                                        break;
+                                    alunos.RemoveAll(aluno => aluno.Matricula.Equals(matriculaASerRetirada));
+                                    Console.WriteLine("Aluno excluido com sucesso");
                                 }
+
                             }
+                        }
+                        continuar = ObtenhaMenuDeContinuacao().ToUpper();
+                        switch (continuar)
+                        {
+                            case "1":
+                                opcaoMenu = "2";
+                                break;
+                            case "2":
+                                opcaoMenu = ObtenhaOpcaoSelecionada();
+                                break;
+                            case "X":
+                                opcaoMenu = "X";
+                                break;
                         }
                         break;
                     case "X":
@@ -236,11 +256,14 @@
                 Console.WriteLine("[X] - Sair");
                 Console.WriteLine("----------------------------------");
 
-                string opcaoMenu = Console.ReadLine().ToUpper();
+                string? opcaoMenu = Console.ReadLine();
 
-                if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu == "4" || opcaoMenu.ToUpper() == "X")
+                if (opcaoMenu != null)
                 {
-                    return opcaoMenu;                   
+                    if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu == "4" || opcaoMenu == "X" || opcaoMenu == "x")
+                    {
+                        return opcaoMenu;
+                    }
                 }
                 else
                 {
@@ -248,7 +271,7 @@
                 }
             }
         }
-        private static string obterValidacaoResposta()
+        private static string ObtenhaMenuDeContinuacao()
         {
             while (true)
             {
@@ -259,12 +282,15 @@
                 Console.WriteLine("[X] - Sair do programa");
                 Console.WriteLine("----------------------------------");
 
-                string? testeValidarResposta = Console.ReadLine();
-                string validarResposta = testeValidarResposta.ToUpper();
+                string? validarResposta = Console.ReadLine();
 
-                if (validarResposta == "1" || validarResposta == "2" || validarResposta.ToUpper() == "X")
+
+                if (validarResposta != null)
                 {
-                    return validarResposta;
+                    if (validarResposta == "1" || validarResposta == "2" || validarResposta == "X" || validarResposta == "x")
+                    {
+                        return validarResposta;
+                    } 
                 }
                 else
                 {
@@ -274,13 +300,6 @@
         }
     }
 }
-
-
-/// to do list
-///  - validação das entradas na opção 1
-///  - pq caralhos tenho que colocar um "?" antes dos console.readline
-///  - colocar mais linq's pra fazer as coisas
-///  
 
 
 
