@@ -1,4 +1,6 @@
-﻿namespace RelatorioAlunos
+﻿using System.Text.RegularExpressions;
+
+namespace RelatorioAlunos
 {
     class Program
     {
@@ -7,6 +9,7 @@
             List<Aluno> alunos = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             bool estaFinalizando = true;
+            int n;
 
 
 
@@ -17,6 +20,15 @@
                     case "1":
                         Console.WriteLine("Digite a matricula: ");
                         string matricula = Console.ReadLine() ?? "";
+                        matricula = matricula.Trim();
+                        bool testeMatricula = Int32.TryParse(matricula, out n);
+                        while (!testeMatricula)
+                        {
+                            Console.WriteLine("A matricula precisa ser um número\nDigite a matricula: ");
+                            matricula = Console.ReadLine() ?? "";
+                            matricula = matricula.Trim();
+                            testeMatricula = Int32.TryParse(matricula, out n);
+                        }
                         foreach (Aluno aluno in alunos)
                         {
                             while (aluno.Matricula == matricula)
@@ -24,6 +36,7 @@
                                 Console.WriteLine("Essa matricula já foi cadastrada");
                                 Console.WriteLine("Digite a matricula: ");
                                 matricula = Console.ReadLine() ?? "";
+                                matricula = matricula.Trim();
                             }
                         }
                         while (matricula == null || matricula.Length < 1)
@@ -31,14 +44,26 @@
                             Console.WriteLine("Insira uma matricula válida");
                             Console.WriteLine("Digite a matricula: ");
                             matricula = Console.ReadLine() ?? "";
+                            matricula = matricula.Trim();
                         }
+
                         Console.WriteLine("Digite o nome: ");
                         string nomeAluno = Console.ReadLine() ?? "";
-                        while (nomeAluno == null || nomeAluno.Length < 1)
+                        nomeAluno = nomeAluno.Trim();
+                        while (!Regex.IsMatch(nomeAluno, @"^[\p{L}\p{M}' \.\-]+$"))
+                        {
+                            Console.WriteLine("Esse nome é invalido");
+                            Console.WriteLine("Digite o nome: ");
+                            nomeAluno = Console.ReadLine() ?? "";
+                            nomeAluno = nomeAluno.Trim();
+
+                        }
+                        while (nomeAluno == null || nomeAluno.Length < 1 || nomeAluno.Length > 100)
                         {
                             Console.WriteLine("Digite um nome válido");
                             Console.WriteLine("Digite o nome: ");
                             nomeAluno = Console.ReadLine() ?? "";
+                            nomeAluno = nomeAluno.Trim();
 
                         }
                         Console.WriteLine("Nota 1: ");
@@ -110,32 +135,22 @@
                         }
                         else
                         {
-                            Console.WriteLine();
-                            Console.WriteLine("Alunos aprovados");
-                            Console.WriteLine("================================================");
-                            Console.WriteLine();
-
+                            string texto = "Alunos Aprovados";
+                            ImprimirMenuAprovacao(texto);
                             foreach (Aluno aluno in alunos)
                             {
                                 if (aluno.Aprovado)
                                 {
-                                    Console.WriteLine();
-                                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-                                    Console.WriteLine();
+                                    ImprimirResumoAluno(aluno);
                                 }
                             }
-
-                            Console.WriteLine();
-                            Console.WriteLine("Alunos Reprovados");
-                            Console.WriteLine("================================================");
-                            Console.WriteLine();
+                            texto = "Alunos Reprovados";
+                            ImprimirMenuAprovacao(texto);
                             foreach (Aluno aluno in alunos)
                             {
                                 if (!aluno.Aprovado)
                                 {
-                                    Console.WriteLine();
-                                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-                                    Console.WriteLine();
+                                    ImprimirResumoAluno(aluno);
                                 }
                             }
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
@@ -170,14 +185,12 @@
 
                             foreach(Aluno aluno in alunoPesquisado)
                             {
-                                Console.WriteLine();
-                                Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-                                Console.WriteLine();
+                                ImprimirResumoAluno(aluno);
                                 Console.WriteLine($"As notas são:\nP1: {aluno.PrimeiraProva}\nP2: {aluno.SegundaProva}");
                             }
-                            if (alunoPesquisado.Count() == 0)
+                            if (!alunoPesquisado.Any())
                             {
-                                Console.WriteLine("Não foi possível localizar esse aluno. Tente novamente");
+                                Console.WriteLine("\nNão foi possível localizar esse aluno. Tente novamente");
                             }
 
 
@@ -262,12 +275,12 @@
                 {
                     if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu == "4" || opcaoMenu == "X" || opcaoMenu == "x")
                     {
-                        return opcaoMenu;
+                        return opcaoMenu;   
                     }
                 }
                 else
                 {
-                    Console.WriteLine("Insira uma opcao valida");
+                    Console.WriteLine("Insira uma opcao valida\n");
                 }
             }
         }
@@ -294,12 +307,31 @@
                 }
                 else
                 {
-                    Console.WriteLine("Insira uma opcao valida");
+                    Console.WriteLine("Insira uma opcao valida\n");
                 }
             }
+        }
+        public static void ImprimirResumoAluno(Aluno aluno)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
+            Console.WriteLine();
+        }
+        public static void ImprimirMenuAprovacao(string texto)
+        {
+            Console.WriteLine();
+            Console.WriteLine($"{texto}");
+            Console.WriteLine("================================================");
+            Console.WriteLine();
         }
     }
 }
 
 
 
+/// Requisitos do projeto:
+/// 1- Conversão de dados OK
+/// 2- Upcast
+/// 3- Downcast
+/// 4- Generics OK
+/// 5- linq OK

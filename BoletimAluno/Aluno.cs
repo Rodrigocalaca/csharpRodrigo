@@ -1,6 +1,6 @@
 ﻿namespace RelatorioAlunos
 {
-    class Aluno
+    public class Aluno
     {
         private readonly string _nome;
         private readonly string _matricula;
@@ -14,36 +14,21 @@
             this.nota2 = p2;
             this._matricula = matricula;
         }
-
-        public string Nome
+        public Aluno()
         {
-            get { return _nome; }
+
         }
 
-        public string Matricula
-        {
-            get { return _matricula; }
-        }
+        public string Nome => _nome;
 
-        public double PrimeiraProva
-        {
-            get { return nota1; }
-        }
+        public string Matricula => _matricula;
+        
+        public double PrimeiraProva => nota1;
 
-        public double SegundaProva
-        {
-            get { return nota2; }
-        }
+        public double SegundaProva => nota2;
 
         public double Media => (nota1 + nota2) / 2;
-        
 
-        public bool Aprovado
-        {
-            get
-            {
-                return Media >= 6;
-            }
-        }
+        public bool Aprovado => Media >= 6;       
     }
 }
