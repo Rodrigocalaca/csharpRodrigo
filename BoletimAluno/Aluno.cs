@@ -3,8 +3,9 @@
     class Aluno
     {
         private readonly string _nome;
-        private string _matricula;
-        private double nota1, nota2;
+        private readonly string _matricula;
+        private readonly double nota1;
+        private readonly double nota2;
 
         public Aluno(string nome, double p1, double p2, string matricula)
         {
@@ -42,38 +43,6 @@
             get
             {
                 return Media >= 6;
-            }
-        }
-        public void ImprimirAlunos()
-        {
-            List<Aluno> alunos = new();
-            Console.WriteLine();
-            Console.WriteLine("Alunos aprovados");
-            Console.WriteLine("================================================");
-            Console.WriteLine();
-
-            foreach (Aluno a in alunos)
-            {
-                if (a.Aprovado)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"Matricula: {a.Matricula} - Aluno: {a.Nome} - Media: {a.Media}");
-                    Console.WriteLine();
-                }
-            }
-
-            Console.WriteLine();
-            Console.WriteLine("Alunos Reprovados");
-            Console.WriteLine("================================================");
-            Console.WriteLine();
-            foreach (Aluno a in alunos)
-            {
-                if (!a.Aprovado)
-                {
-                    Console.WriteLine();
-                    Console.WriteLine($"Matricula: {a.Matricula} - Aluno: {a.Nome} - Media: {a.Media}");
-                    Console.WriteLine();
-                }
             }
         }
     }
