@@ -9,7 +9,7 @@ namespace RelatorioAlunos
             List<Aluno> alunos = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             bool estaFinalizando = true;
-            int n;
+            int validacaoNumero;
 
 
 
@@ -21,13 +21,13 @@ namespace RelatorioAlunos
                         Console.WriteLine("Digite a matricula: ");
                         string matricula = Console.ReadLine() ?? "";
                         matricula = matricula.Trim();
-                        bool testeMatricula = Int32.TryParse(matricula, out n);
+                        bool testeMatricula = Int32.TryParse(matricula, out validacaoNumero);
                         while (!testeMatricula)
                         {
                             Console.WriteLine("A matricula precisa ser um número\nDigite a matricula: ");
                             matricula = Console.ReadLine() ?? "";
                             matricula = matricula.Trim();
-                            testeMatricula = Int32.TryParse(matricula, out n);
+                            testeMatricula = Int32.TryParse(matricula, out validacaoNumero);
                         }
                         foreach (Aluno aluno in alunos)
                         {
@@ -68,7 +68,7 @@ namespace RelatorioAlunos
                         }
                         Console.WriteLine("Nota 1: ");
                         double nota1 = 0;
-                        while(true){
+                        while (true) {
                             try
                             {
                                 nota1 = double.Parse(Console.ReadLine() ?? "");
@@ -76,7 +76,7 @@ namespace RelatorioAlunos
                             }
                             catch (Exception)
                             {
-                                Console.WriteLine("Insira uma nota válida\nNota 1: ");  
+                                Console.WriteLine("Insira uma nota válida\nNota 1: ");
                             }
                         }
                         while (nota1 < 0 || nota1 > 10)
@@ -178,20 +178,17 @@ namespace RelatorioAlunos
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja buscar: ");
                             string? matriculaAPesquisar = Console.ReadLine();
-                            IEnumerable<Aluno> alunoPesquisado =
-                                from alunosPesquisados in alunos
-                                where alunosPesquisados.Matricula == matriculaAPesquisar
-                                select alunosPesquisados;
+                            IEnumerable<Aluno> alunoBuscado =
+                                from alunoASerBuscado in alunos
+                                where alunoASerBuscado.Matricula == matriculaAPesquisar
+                                select alunoASerBuscado;
 
-                            foreach(Aluno aluno in alunoPesquisado)
+                            foreach (Aluno aluno in alunoBuscado)
                             {
                                 ImprimirResumoAluno(aluno);
-                                Console.WriteLine($"As notas são:\nP1: {aluno.PrimeiraProva}\nP2: {aluno.SegundaProva}");
+                                Console.WriteLine($"NOTAS\nPrimeria prova: {aluno.PrimeiraProva}\nSegunda prova: {aluno.SegundaProva}");
                             }
-                            if (!alunoPesquisado.Any())
-                            {
-                                Console.WriteLine("\nNão foi possível localizar esse aluno. Tente novamente");
-                            }
+
 
 
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
@@ -220,19 +217,22 @@ namespace RelatorioAlunos
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja remover: ");
                             string matriculaASerRetirada = Console.ReadLine() ?? "";
-                            foreach (Aluno aluno in alunos.ToArray())
-                            {
-                                if (aluno.Matricula != matriculaASerRetirada)
-                                {
-                                    Console.WriteLine("Aluno não encontrado");
-                                }
-                                else if (aluno.Matricula == matriculaASerRetirada)
-                                {
-                                    alunos.RemoveAll(aluno => aluno.Matricula.Equals(matriculaASerRetirada));
-                                    Console.WriteLine("Aluno excluido com sucesso");
-                                }
+                            IEnumerable<Aluno> alunoBuscado =
+                                from alunoASerBuscado in alunos
+                                where alunoASerBuscado.Matricula == matriculaASerRetirada
+                                select alunoASerBuscado;
 
+                            if (!alunoBuscado.Any())
+                            {
+                                Console.WriteLine("O aluno não foi encontrado");
                             }
+                            else
+                            {
+                                alunos.RemoveAll(aluno => aluno.Matricula == matriculaASerRetirada);
+                                Console.WriteLine("O aluno foi excluido com sucesso");
+                            }
+
+
                         }
                         continuar = ObtenhaMenuDeContinuacao().ToUpper();
                         switch (continuar)
@@ -252,7 +252,7 @@ namespace RelatorioAlunos
                         Console.WriteLine("Finalizando o processo...");
                         estaFinalizando = false;
                         break;
-                        
+
                 }
             }
         }
@@ -275,7 +275,7 @@ namespace RelatorioAlunos
                 {
                     if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu == "4" || opcaoMenu == "X" || opcaoMenu == "x")
                     {
-                        return opcaoMenu;   
+                        return opcaoMenu;
                     }
                 }
                 else
@@ -303,7 +303,7 @@ namespace RelatorioAlunos
                     if (validarResposta == "1" || validarResposta == "2" || validarResposta == "X" || validarResposta == "x")
                     {
                         return validarResposta;
-                    } 
+                    }
                 }
                 else
                 {
