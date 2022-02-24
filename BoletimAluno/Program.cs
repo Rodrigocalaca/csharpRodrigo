@@ -7,14 +7,11 @@ namespace RelatorioAlunos
         static void Main()
         {
             List<Aluno> alunos = new();
+            List<AlunoEnsinoBasico> alunoBasico = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
-            bool estaFinalizando = true;
             int validacaoNumero;
 
-
-
-            while (estaFinalizando)
-            {
+            while(opcaoMenu != "X") {
                 switch (opcaoMenu)
                 {
                     case "1":
@@ -68,7 +65,8 @@ namespace RelatorioAlunos
                         }
                         Console.WriteLine("Nota 1: ");
                         double nota1 = 0;
-                        while (true) {
+                        while (true)
+                        {
                             try
                             {
                                 nota1 = double.Parse(Console.ReadLine() ?? "");
@@ -108,24 +106,11 @@ namespace RelatorioAlunos
 
                         }
 
-
                         Aluno novoAluno = new(nomeAluno, nota1, nota2, matricula);
                         alunos.Add(novoAluno);
 
-
                         var continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                        switch (continuar)
-                        {
-                            case "1":
-                                opcaoMenu = "1";
-                                break;
-                            case "2":
-                                opcaoMenu = ObtenhaOpcaoSelecionada();
-                                break;
-                            case "X":
-                                opcaoMenu = "X";
-                                break;
-                        }
+                        SwitchCaseDoMenu(continuar, "1");
                         break;
                     case "2":
                         if (alunos.Count == 0)
@@ -154,18 +139,7 @@ namespace RelatorioAlunos
                                 }
                             }
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                            switch (continuar)
-                            {
-                                case "1":
-                                    opcaoMenu = "2";
-                                    break;
-                                case "2":
-                                    opcaoMenu = ObtenhaOpcaoSelecionada();
-                                    break;
-                                case "X":
-                                    opcaoMenu = "X";
-                                    break;
-                            }
+                            SwitchCaseDoMenu(continuar, "2");
                         }
                         break;
                     case "3":
@@ -178,34 +152,16 @@ namespace RelatorioAlunos
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja buscar: ");
                             string? matriculaAPesquisar = Console.ReadLine();
-                            IEnumerable<Aluno> alunoBuscado =
-                                from alunoASerBuscado in alunos
-                                where alunoASerBuscado.Matricula == matriculaAPesquisar
-                                select alunoASerBuscado;
 
-                            foreach (Aluno aluno in alunoBuscado)
+
+                            foreach (Aluno aluno in BuscaMatricula(matriculaAPesquisar, alunos))
                             {
                                 ImprimirResumoAluno(aluno);
                                 Console.WriteLine($"NOTAS\nPrimeria prova: {aluno.PrimeiraProva}\nSegunda prova: {aluno.SegundaProva}");
                             }
-
-
-
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                            switch (continuar)
-                            {
-                                case "1":
-                                    opcaoMenu = "3";
-                                    break;
-                                case "2":
-                                    opcaoMenu = ObtenhaOpcaoSelecionada();
-                                    break;
-                                case "X":
-                                    opcaoMenu = "X";
-                                    break;
-                            }
+                            SwitchCaseDoMenu(continuar, "3");
                         }
-
                         break;
                     case "4":
                         if (alunos.Count == 0)
@@ -217,12 +173,9 @@ namespace RelatorioAlunos
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja remover: ");
                             string matriculaASerRetirada = Console.ReadLine() ?? "";
-                            IEnumerable<Aluno> alunoBuscado =
-                                from alunoASerBuscado in alunos
-                                where alunoASerBuscado.Matricula == matriculaASerRetirada
-                                select alunoASerBuscado;
 
-                            if (!alunoBuscado.Any())
+
+                            if (!BuscaMatricula(matriculaASerRetirada, alunos).Any())
                             {
                                 Console.WriteLine("O aluno não foi encontrado");
                             }
@@ -231,35 +184,19 @@ namespace RelatorioAlunos
                                 alunos.RemoveAll(aluno => aluno.Matricula == matriculaASerRetirada);
                                 Console.WriteLine("O aluno foi excluido com sucesso");
                             }
-
-
                         }
                         continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                        switch (continuar)
-                        {
-                            case "1":
-                                opcaoMenu = "2";
-                                break;
-                            case "2":
-                                opcaoMenu = ObtenhaOpcaoSelecionada();
-                                break;
-                            case "X":
-                                opcaoMenu = "X";
-                                break;
-                        }
+                        SwitchCaseDoMenu(continuar, "4");
                         break;
-                    case "X":
-                        Console.WriteLine("Finalizando o processo...");
-                        estaFinalizando = false;
+                    default:
+                        opcaoMenu = ObtenhaOpcaoSelecionada();
                         break;
-
                 }
             }
         }
         private static string ObtenhaOpcaoSelecionada()
         {
-            while (true)
-            {
+            
                 Console.WriteLine("----------------------------------");
                 Console.WriteLine("Digite a opcao desejada: ");
                 Console.WriteLine("[1] - Adicionar aluno");
@@ -269,20 +206,9 @@ namespace RelatorioAlunos
                 Console.WriteLine("[X] - Sair");
                 Console.WriteLine("----------------------------------");
 
-                string? opcaoMenu = Console.ReadLine();
+                string? opcaoMenu = Console.ReadLine() ?? "";
 
-                if (opcaoMenu != null)
-                {
-                    if (opcaoMenu == "1" || opcaoMenu == "2" || opcaoMenu == "3" || opcaoMenu == "4" || opcaoMenu == "X" || opcaoMenu == "x")
-                    {
-                        return opcaoMenu;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("Insira uma opcao valida\n");
-                }
-            }
+                return opcaoMenu;
         }
         private static string ObtenhaMenuDeContinuacao()
         {
@@ -297,12 +223,12 @@ namespace RelatorioAlunos
 
                 string? validarResposta = Console.ReadLine();
 
-
                 if (validarResposta != null)
                 {
                     if (validarResposta == "1" || validarResposta == "2" || validarResposta == "X" || validarResposta == "x")
                     {
                         return validarResposta;
+                        
                     }
                 }
                 else
@@ -324,10 +250,40 @@ namespace RelatorioAlunos
             Console.WriteLine("================================================");
             Console.WriteLine();
         }
+        public static IEnumerable<Aluno> BuscaMatricula(string matricula, List<Aluno> alunosT)
+        {
+             IEnumerable<Aluno> alunoBuscado =
+                from aluno in alunosT
+                where aluno.Matricula == matricula
+                select aluno;
+
+            return alunoBuscado;
+        }
+        public static string SwitchCaseDoMenu(string opcaoDigitada, string opcaoDoMenu)
+        {
+            switch (opcaoDigitada)
+            {
+                case "1":
+                    return opcaoDoMenu;
+                case "2":
+                    return ObtenhaOpcaoSelecionada();
+                case "X":
+                    return "X";
+                default:
+                    Console.WriteLine("Insira uma opcao valida");
+                    break;
+            }
+            return "0";
+        }
     }
 }
 
+//private static string InformeTipoAluno()
+//{
+//    -AlunoEnsinoBasico
 
+//    -AlunoEnsinoMedio
+//}
 
 /// Requisitos do projeto:
 /// 1- Conversão de dados OK
@@ -335,3 +291,7 @@ namespace RelatorioAlunos
 /// 3- Downcast
 /// 4- Generics OK
 /// 5- linq OK
+
+/// Coisas a se fazer:
+/// tirar laços de repetição desnecessários
+/// focar nos casts 
