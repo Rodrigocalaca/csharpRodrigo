@@ -1,0 +1,30 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32126.317
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BoletimAluno", "BoletimAluno.csproj", "{869FCE9D-BB91-4404-93DC-5253D509919F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{80D3FDDF-519E-4490-8385-D5D6520FE86B}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{869FCE9D-BB91-4404-93DC-5253D509919F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{869FCE9D-BB91-4404-93DC-5253D509919F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{869FCE9D-BB91-4404-93DC-5253D509919F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{869FCE9D-BB91-4404-93DC-5253D509919F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {499CF3BC-CDE9-44A8-B8A9-42B763BB49E2}
+	EndGlobalSection
+EndGlobal
