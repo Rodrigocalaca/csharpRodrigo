@@ -9,6 +9,8 @@ namespace RelatorioAlunos
             List<Aluno> alunos = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             int validacaoNumero;
+            bool testaTurnoAulas = false;
+
 
             while (opcaoMenu.ToUpper() != "X")
             {
@@ -26,20 +28,57 @@ namespace RelatorioAlunos
                                 var aluno = new AlunoEnsinoBasico();
                                 Console.WriteLine("Aluno ensino basico");
                                 Console.WriteLine("Série: ");
-                                aluno.Serie = Console.ReadLine() ?? "";
+                                string serie = Console.ReadLine() ?? "";
+                                bool testeSerie = Int32.TryParse(serie, out validacaoNumero);
+                                while (!testeSerie)
+                                {
+                                    Console.WriteLine("Insira uma série valida");
+                                    Console.WriteLine("Série: ");
+                                    serie = Console.ReadLine() ?? "";
+                                }
+                                aluno.Serie = serie;
                                 Console.WriteLine("Nome do responsável: ");
-                                aluno.Responsavel = Console.ReadLine() ?? "";
+                                string responsavel = Console.ReadLine() ?? "";
+                                while (!Regex.IsMatch(responsavel, @"^[\p{L}\p{M}' \.\-]+$"))
+                                {
+                                    Console.WriteLine("Esse nome é invalido");
+                                    Console.WriteLine("Digite o nome: ");
+                                    responsavel = Console.ReadLine() ?? "";
+                                    responsavel = responsavel.Trim();
+
+                                }
+                                aluno.Responsavel = responsavel;
                                 break;
-                                
+
                             }
                             else if (opcaoDeEnsino == "2")
                             {
                                 var aluno = new AlunoEnsinoSuperior();
                                 Console.WriteLine("Aluno Ensino Superior");
-                                Console.WriteLine("Digite o periodo: Ex.: [Matutino/Vespertino/Noturno]");
-                                aluno.TurnoDasAulas = Console.ReadLine() ?? "";
+                                Console.WriteLine("Digite o periodo: Ex.: [M/V/N]");
+                                string turnoDasAulas = Console.ReadLine() ?? "";
+                                turnoDasAulas = turnoDasAulas.Trim();
+                                while (!testaTurnoAulas)
+                                {
+                                    if (turnoDasAulas == "M" || turnoDasAulas == "V" || turnoDasAulas == "N")
+                                    {
+                                        testaTurnoAulas = true;
+                                    }
+                                    Console.WriteLine("Digite um turno valido");
+                                    Console.WriteLine("Digite o periodo: Ex.: [M/V/N]");
+                                    turnoDasAulas = Console.ReadLine() ?? "";
+                                    turnoDasAulas = turnoDasAulas.Trim();
+                                }
                                 Console.WriteLine("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
-                                aluno.Periodo = Console.ReadLine();
+                                string periodo = Console.ReadLine() ?? "";
+                                bool testePeriodo = Int32.TryParse(periodo, out validacaoNumero);
+                                while (!testePeriodo)
+                                {
+                                    Console.WriteLine("Insira uma Periodo valido");
+                                    Console.WriteLine("Periodo: ");
+                                    periodo = Console.ReadLine() ?? "";
+                                }
+
 
                                 break;
                             }
@@ -158,6 +197,7 @@ namespace RelatorioAlunos
                         }
                         else
                         {
+                            
                             string texto = "Alunos Aprovados";
                             ImprimirMenuAprovacao(texto);
                             foreach (Aluno aluno in alunos)
@@ -324,5 +364,5 @@ namespace RelatorioAlunos
 /// 5- linq OK
 
 /// Coisas a se fazer:
-/// focar nos casts 
+/// focar nos casts (ROLOU DE FAZER O CAST AGORA É SO USAR)
 /// parar de ser limitado e conseguir fazer a coisa a cima (❁´◡`❁)

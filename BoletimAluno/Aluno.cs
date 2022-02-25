@@ -7,6 +7,8 @@
         private readonly double nota1;
         private readonly double nota2;
 
+        
+
         public Aluno()
         {
 
@@ -18,6 +20,7 @@
             this.nota1 = p1;
             this.nota2 = p2;
             this._matricula = matricula;
+
         }
 
         public string Nome => _nome;
