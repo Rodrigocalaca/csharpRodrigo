@@ -6,8 +6,6 @@ namespace RelatorioAlunos
     {
         static void Main()
         {
-            Aluno alunoEnsinoBasico = new AlunoEnsinoBasico();
-            Aluno alunoEnsinoSuperior = new AlunoEnsinoSuperior();
             List<Aluno> alunos = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             int validacaoNumero;
@@ -17,40 +15,43 @@ namespace RelatorioAlunos
                 switch (opcaoMenu)
                 {
                     case "1":
-                        //Console.WriteLine("---------------------------");
-                        //Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
-                        //Console.WriteLine("---------------------------");
-                        //string opcaoDeEnsino = Console.ReadLine() ?? "";
-                        //while (opcaoDeEnsino != "1" || opcaoDeEnsino != "2")
-                        //{
-                        //    if (opcaoDeEnsino == "1")
-                        //    {
-                        //        Console.WriteLine("Aluno ensino basico");
-                        //        Console.WriteLine("Série: ");
-                        //        string serie = Console.ReadLine() ?? "";
-                        //        Console.WriteLine("Nome do responsável: ");
-                        //        string nomeDoResponsavel = Console.ReadLine() ?? "";
-                        //
-                        //        break;
-                        //    }
-                        //    else if (opcaoDeEnsino == "2")
-                        //    {
-                        //        Console.WriteLine("Aluno Ensino Superior");
-                        //        Console.WriteLine("Digite o periodo: Ex.: [Matutino/Vespertino/Noturno]");
-                        //        string turnoDasAulas = Console.ReadLine() ?? "";
-                        //        Console.WriteLine("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
-                        //        string Periodo = Console.ReadLine() ?? "";
-                        //        break;
-                        //    }
-                        //    else
-                        //    {
-                        //        Console.WriteLine("Insira uma opcao Valida");
-                        //        Console.WriteLine("---------------------------");
-                        //        Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
-                        //        Console.WriteLine("---------------------------");
-                        //        opcaoDeEnsino = Console.ReadLine() ?? "";
-                        //    }
-                        //}
+                        Console.WriteLine("---------------------------");
+                        Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
+                        Console.WriteLine("---------------------------");
+                        string opcaoDeEnsino = Console.ReadLine() ?? "";
+                        while (opcaoDeEnsino != "1" || opcaoDeEnsino != "2")
+                        {
+                            if (opcaoDeEnsino == "1")
+                            {
+                                var aluno = new AlunoEnsinoBasico();
+                                Console.WriteLine("Aluno ensino basico");
+                                Console.WriteLine("Série: ");
+                                aluno.Serie = Console.ReadLine() ?? "";
+                                Console.WriteLine("Nome do responsável: ");
+                                aluno.Responsavel = Console.ReadLine() ?? "";
+                                break;
+                                
+                            }
+                            else if (opcaoDeEnsino == "2")
+                            {
+                                var aluno = new AlunoEnsinoSuperior();
+                                Console.WriteLine("Aluno Ensino Superior");
+                                Console.WriteLine("Digite o periodo: Ex.: [Matutino/Vespertino/Noturno]");
+                                aluno.TurnoDasAulas = Console.ReadLine() ?? "";
+                                Console.WriteLine("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
+                                aluno.Periodo = Console.ReadLine();
+
+                                break;
+                            }
+                            else
+                            {
+                                Console.WriteLine("Insira uma opcao Valida");
+                                Console.WriteLine("---------------------------");
+                                Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
+                                Console.WriteLine("---------------------------");
+                                opcaoDeEnsino = Console.ReadLine() ?? "";
+                            }
+                        }
 
                         Console.WriteLine("Digite a matricula: ");
                         string matricula = Console.ReadLine() ?? "";
@@ -324,3 +325,4 @@ namespace RelatorioAlunos
 
 /// Coisas a se fazer:
 /// focar nos casts 
+/// parar de ser limitado e conseguir fazer a coisa a cima (❁´◡`❁)

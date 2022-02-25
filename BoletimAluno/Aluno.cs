@@ -19,7 +19,6 @@
             this.nota2 = p2;
             this._matricula = matricula;
         }
-        
 
         public string Nome => _nome;
 

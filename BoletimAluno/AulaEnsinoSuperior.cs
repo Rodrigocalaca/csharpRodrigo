@@ -4,6 +4,6 @@
     {
         public string? TurnoDasAulas { get; set; }
 
-        public int Periodo { get; set; }
+        public string? Periodo { get; set; }
     }
 }
