@@ -5,8 +5,5 @@
         public string? TurnoDasAulas { get; set; }
 
         public int Periodo { get; set; }
-
-
     }
-
 }

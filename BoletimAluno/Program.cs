@@ -6,15 +6,52 @@ namespace RelatorioAlunos
     {
         static void Main()
         {
+            Aluno alunoEnsinoBasico = new AlunoEnsinoBasico();
+            Aluno alunoEnsinoSuperior = new AlunoEnsinoSuperior();
             List<Aluno> alunos = new();
-            List<AlunoEnsinoBasico> alunoBasico = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             int validacaoNumero;
 
-            while(opcaoMenu != "X") {
+            while (opcaoMenu.ToUpper() != "X")
+            {
                 switch (opcaoMenu)
                 {
                     case "1":
+                        //Console.WriteLine("---------------------------");
+                        //Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
+                        //Console.WriteLine("---------------------------");
+                        //string opcaoDeEnsino = Console.ReadLine() ?? "";
+                        //while (opcaoDeEnsino != "1" || opcaoDeEnsino != "2")
+                        //{
+                        //    if (opcaoDeEnsino == "1")
+                        //    {
+                        //        Console.WriteLine("Aluno ensino basico");
+                        //        Console.WriteLine("Série: ");
+                        //        string serie = Console.ReadLine() ?? "";
+                        //        Console.WriteLine("Nome do responsável: ");
+                        //        string nomeDoResponsavel = Console.ReadLine() ?? "";
+                        //
+                        //        break;
+                        //    }
+                        //    else if (opcaoDeEnsino == "2")
+                        //    {
+                        //        Console.WriteLine("Aluno Ensino Superior");
+                        //        Console.WriteLine("Digite o periodo: Ex.: [Matutino/Vespertino/Noturno]");
+                        //        string turnoDasAulas = Console.ReadLine() ?? "";
+                        //        Console.WriteLine("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
+                        //        string Periodo = Console.ReadLine() ?? "";
+                        //        break;
+                        //    }
+                        //    else
+                        //    {
+                        //        Console.WriteLine("Insira uma opcao Valida");
+                        //        Console.WriteLine("---------------------------");
+                        //        Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
+                        //        Console.WriteLine("---------------------------");
+                        //        opcaoDeEnsino = Console.ReadLine() ?? "";
+                        //    }
+                        //}
+
                         Console.WriteLine("Digite a matricula: ");
                         string matricula = Console.ReadLine() ?? "";
                         matricula = matricula.Trim();
@@ -110,7 +147,7 @@ namespace RelatorioAlunos
                         alunos.Add(novoAluno);
 
                         var continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                        SwitchCaseDoMenu(continuar, "1");
+                        opcaoMenu = SwitchCaseDoMenu(continuar, "1");
                         break;
                     case "2":
                         if (alunos.Count == 0)
@@ -139,7 +176,7 @@ namespace RelatorioAlunos
                                 }
                             }
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                            SwitchCaseDoMenu(continuar, "2");
+                            opcaoMenu = SwitchCaseDoMenu(continuar, "2");
                         }
                         break;
                     case "3":
@@ -151,7 +188,7 @@ namespace RelatorioAlunos
                         else
                         {
                             Console.WriteLine("Digite a matricula do aluno que deseja buscar: ");
-                            string? matriculaAPesquisar = Console.ReadLine();
+                            string? matriculaAPesquisar = Console.ReadLine() ?? "";
 
 
                             foreach (Aluno aluno in BuscaMatricula(matriculaAPesquisar, alunos))
@@ -160,7 +197,7 @@ namespace RelatorioAlunos
                                 Console.WriteLine($"NOTAS\nPrimeria prova: {aluno.PrimeiraProva}\nSegunda prova: {aluno.SegundaProva}");
                             }
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                            SwitchCaseDoMenu(continuar, "3");
+                            opcaoMenu = SwitchCaseDoMenu(continuar, "3");
                         }
                         break;
                     case "4":
@@ -186,7 +223,7 @@ namespace RelatorioAlunos
                             }
                         }
                         continuar = ObtenhaMenuDeContinuacao().ToUpper();
-                        SwitchCaseDoMenu(continuar, "4");
+                        opcaoMenu = SwitchCaseDoMenu(continuar, "4");
                         break;
                     default:
                         opcaoMenu = ObtenhaOpcaoSelecionada();
@@ -196,19 +233,19 @@ namespace RelatorioAlunos
         }
         private static string ObtenhaOpcaoSelecionada()
         {
-            
-                Console.WriteLine("----------------------------------");
-                Console.WriteLine("Digite a opcao desejada: ");
-                Console.WriteLine("[1] - Adicionar aluno");
-                Console.WriteLine("[2] - Consulta geral da turma");
-                Console.WriteLine("[3] - Buscar aluno");
-                Console.WriteLine("[4] - Excluir aluno");
-                Console.WriteLine("[X] - Sair");
-                Console.WriteLine("----------------------------------");
 
-                string? opcaoMenu = Console.ReadLine() ?? "";
+            Console.WriteLine("----------------------------------");
+            Console.WriteLine("Digite a opcao desejada: ");
+            Console.WriteLine("[1] - Adicionar aluno");
+            Console.WriteLine("[2] - Consulta geral da turma");
+            Console.WriteLine("[3] - Buscar aluno");
+            Console.WriteLine("[4] - Excluir aluno");
+            Console.WriteLine("[X] - Sair");
+            Console.WriteLine("----------------------------------");
 
-                return opcaoMenu;
+            string? opcaoMenu = Console.ReadLine() ?? "";
+
+            return opcaoMenu;
         }
         private static string ObtenhaMenuDeContinuacao()
         {
@@ -228,7 +265,7 @@ namespace RelatorioAlunos
                     if (validarResposta == "1" || validarResposta == "2" || validarResposta == "X" || validarResposta == "x")
                     {
                         return validarResposta;
-                        
+
                     }
                 }
                 else
@@ -252,10 +289,10 @@ namespace RelatorioAlunos
         }
         public static IEnumerable<Aluno> BuscaMatricula(string matricula, List<Aluno> alunosT)
         {
-             IEnumerable<Aluno> alunoBuscado =
-                from aluno in alunosT
-                where aluno.Matricula == matricula
-                select aluno;
+            IEnumerable<Aluno> alunoBuscado =
+               from aluno in alunosT
+               where aluno.Matricula == matricula
+               select aluno;
 
             return alunoBuscado;
         }
@@ -278,13 +315,6 @@ namespace RelatorioAlunos
     }
 }
 
-//private static string InformeTipoAluno()
-//{
-//    -AlunoEnsinoBasico
-
-//    -AlunoEnsinoMedio
-//}
-
 /// Requisitos do projeto:
 /// 1- Conversão de dados OK
 /// 2- Upcast
@@ -293,5 +323,4 @@ namespace RelatorioAlunos
 /// 5- linq OK
 
 /// Coisas a se fazer:
-/// tirar laços de repetição desnecessários
 /// focar nos casts 
