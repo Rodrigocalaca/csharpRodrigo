@@ -47,11 +47,31 @@ namespace boletimAluno
                 }
             }
         }
-        public static void ImprimirResumoAluno(Aluno aluno)
+        public static void ImprimirResumoAluno(Aluno aluno, bool tipoDeEnsino)
         {
-            Console.WriteLine();
-            Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-            Console.WriteLine();
+            if (tipoDeEnsino)
+            {
+                var ImprimirAlunoBasico = aluno as AlunoEnsinoBasico;
+                if (aluno is AlunoEnsinoBasico)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}\n" +
+                        $"Serie: {ImprimirAlunoBasico?.Serie}º Ano - Responsavel: {ImprimirAlunoBasico?.Responsavel}");
+                    Console.WriteLine();
+                }
+            }
+            if (!tipoDeEnsino)
+            {
+                var ImprimirAlunoSuperior = aluno as AlunoEnsinoSuperior;
+                if (aluno is AlunoEnsinoSuperior)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}\n" +
+                        $"Turno das aulas: {ImprimirAlunoSuperior?.TurnoDasAulas} - Periodo: {ImprimirAlunoSuperior?.Periodo}º");
+                    Console.WriteLine();
+                }
+
+            }
         }
         public static void ImprimirMenuAprovacao(string texto)
         {
