@@ -8,9 +8,8 @@ namespace RelatorioAlunos
         static void Main()
         {
             List<Aluno> alunos = new();
-            var opcaoMenu = IAluno.ObtenhaOpcaoSelecionada().ToUpper();
-            int validacaoNumero;
-            bool testeDeTurno = false;
+            int validacaoNumeroInteiro;
+            bool testarSeOTurnoEhValido = false;
             bool tipoDeEnsino = false;
             string? serie = "";
             string? responsavel = "";
@@ -44,6 +43,8 @@ namespace RelatorioAlunos
                 }
             }
 
+            var opcaoMenu = IAluno.ObtenhaOpcaoSelecionada().ToUpper();
+
             while (opcaoMenu.ToUpper() != "X")
             {
                 switch (opcaoMenu)
@@ -54,13 +55,13 @@ namespace RelatorioAlunos
                         Console.WriteLine("Digite a matricula: ");
                         string matricula = Console.ReadLine() ?? "";
                         matricula = matricula.Trim();
-                        bool testeMatricula = Int32.TryParse(matricula, out validacaoNumero);
+                        bool testeMatricula = Int32.TryParse(matricula, out validacaoNumeroInteiro);
                         while (!testeMatricula)
                         {
                             Console.WriteLine("A matricula precisa ser um número\nDigite a matricula: ");
                             matricula = Console.ReadLine() ?? "";
                             matricula = matricula.Trim();
-                            testeMatricula = Int32.TryParse(matricula, out validacaoNumero);
+                            testeMatricula = Int32.TryParse(matricula, out validacaoNumeroInteiro);
                         }
                         foreach (Aluno aluno in alunos)
                         {
@@ -143,7 +144,7 @@ namespace RelatorioAlunos
                         {
                             Console.WriteLine("Série: ");
                             serie = Console.ReadLine() ?? "";
-                            bool testeSerie = Int32.TryParse(serie, out validacaoNumero);
+                            bool testeSerie = Int32.TryParse(serie, out validacaoNumeroInteiro);
                             while (!testeSerie)
                             {
                                 Console.WriteLine("Insira uma série valida");
@@ -172,7 +173,7 @@ namespace RelatorioAlunos
                         }
                         else if (!tipoDeEnsino)
                         {                      
-                            while(!testeDeTurno)
+                            while(!testarSeOTurnoEhValido)
                             {
                                 Console.WriteLine("Digite o periodo: [MATUTINO/NOTURNO]");
                                 turnoDasAulas = Console.ReadLine() ?? "";
@@ -180,24 +181,24 @@ namespace RelatorioAlunos
                                 if (turnoDasAulas == "MATUTINO")
                                 {
                                     Console.WriteLine($"Escolheu {turnoDasAulas}");
-                                    testeDeTurno = true;
+                                    testarSeOTurnoEhValido = true;
                                 }
                                 else if (turnoDasAulas == "NOTURNO")
                                 {
                                     Console.WriteLine($"Escolheu {turnoDasAulas}");
-                                    testeDeTurno = true;
+                                    testarSeOTurnoEhValido = true;
                                 }
                                 else
                                 {
                                     Console.WriteLine("Digite um valor valido");
-                                    testeDeTurno = false;
+                                    testarSeOTurnoEhValido = false;
 
                                 }
                             }
-                            testeDeTurno = false;
+                            testarSeOTurnoEhValido = false;
                             Console.WriteLine("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
                             periodo = Console.ReadLine() ?? "";
-                            bool testePeriodo = Int32.TryParse(periodo, out validacaoNumero);
+                            bool testePeriodo = Int32.TryParse(periodo, out validacaoNumeroInteiro);
                             while (!testePeriodo)
                             {
                                 Console.WriteLine("Insira uma Periodo valido");
