@@ -9,7 +9,12 @@ namespace RelatorioAlunos
             List<Aluno> alunos = new();
             var opcaoMenu = ObtenhaOpcaoSelecionada().ToUpper();
             int validacaoNumero;
-            bool testaTurnoAulas = false;
+            bool tipoDeEnsino = false;
+            bool auxiliarTipoDeEnsino = false;
+            string? serie = "";
+            string? responsavel = "";
+            string? turnoDasAulas = "";
+            string? periodo = "";
 
 
             while (opcaoMenu.ToUpper() != "X")
@@ -25,10 +30,11 @@ namespace RelatorioAlunos
                         {
                             if (opcaoDeEnsino == "1")
                             {
-                                var aluno = new AlunoEnsinoBasico();
+                                tipoDeEnsino = true;
+                                auxiliarTipoDeEnsino = true;
                                 Console.WriteLine("Aluno ensino basico");
                                 Console.WriteLine("Série: ");
-                                string serie = Console.ReadLine() ?? "";
+                                serie = Console.ReadLine() ?? "";
                                 bool testeSerie = Int32.TryParse(serie, out validacaoNumero);
                                 while (!testeSerie)
                                 {
@@ -36,9 +42,8 @@ namespace RelatorioAlunos
                                     Console.WriteLine("Série: ");
                                     serie = Console.ReadLine() ?? "";
                                 }
-                                aluno.Serie = serie;
                                 Console.WriteLine("Nome do responsável: ");
-                                string responsavel = Console.ReadLine() ?? "";
+                                responsavel = Console.ReadLine() ?? "";
                                 while (!Regex.IsMatch(responsavel, @"^[\p{L}\p{M}' \.\-]+$"))
                                 {
                                     Console.WriteLine("Esse nome é invalido");
@@ -47,30 +52,19 @@ namespace RelatorioAlunos
                                     responsavel = responsavel.Trim();
 
                                 }
-                                aluno.Responsavel = responsavel;
                                 break;
 
                             }
                             else if (opcaoDeEnsino == "2")
                             {
-                                var aluno = new AlunoEnsinoSuperior();
+                                tipoDeEnsino = false;
+                                auxiliarTipoDeEnsino = false;
                                 Console.WriteLine("Aluno Ensino Superior");
                                 Console.WriteLine("Digite o periodo: Ex.: [M/V/N]");
-                                string turnoDasAulas = Console.ReadLine() ?? "";
+                                turnoDasAulas = Console.ReadLine() ?? "";
                                 turnoDasAulas = turnoDasAulas.Trim();
-                                while (!testaTurnoAulas)
-                                {
-                                    if (turnoDasAulas == "M" || turnoDasAulas == "V" || turnoDasAulas == "N")
-                                    {
-                                        testaTurnoAulas = true;
-                                    }
-                                    Console.WriteLine("Digite um turno valido");
-                                    Console.WriteLine("Digite o periodo: Ex.: [M/V/N]");
-                                    turnoDasAulas = Console.ReadLine() ?? "";
-                                    turnoDasAulas = turnoDasAulas.Trim();
-                                }
                                 Console.WriteLine("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
-                                string periodo = Console.ReadLine() ?? "";
+                                periodo = Console.ReadLine() ?? "";
                                 bool testePeriodo = Int32.TryParse(periodo, out validacaoNumero);
                                 while (!testePeriodo)
                                 {
@@ -183,8 +177,18 @@ namespace RelatorioAlunos
 
                         }
 
-                        Aluno novoAluno = new(nomeAluno, nota1, nota2, matricula);
-                        alunos.Add(novoAluno);
+                        if (tipoDeEnsino)
+                        {
+                            AlunoEnsinoBasico novoAluno = new(nomeAluno, nota1, nota2, matricula, serie, responsavel);
+                            alunos.Add(novoAluno);
+                        }
+                        else if (!tipoDeEnsino)
+                        {
+                            AlunoEnsinoSuperior novoAluno = new(nomeAluno, nota1, nota2, matricula, turnoDasAulas, periodo);
+                            alunos.Add(novoAluno);
+                        }
+
+
 
                         var continuar = ObtenhaMenuDeContinuacao().ToUpper();
                         opcaoMenu = SwitchCaseDoMenu(continuar, "1");
@@ -197,14 +201,14 @@ namespace RelatorioAlunos
                         }
                         else
                         {
-                            
+
                             string texto = "Alunos Aprovados";
                             ImprimirMenuAprovacao(texto);
                             foreach (Aluno aluno in alunos)
                             {
                                 if (aluno.Aprovado)
                                 {
-                                    ImprimirResumoAluno(aluno);
+                                    ImprimirResumoAluno(aluno, tipoDeEnsino, auxiliarTipoDeEnsino);
                                 }
                             }
                             texto = "Alunos Reprovados";
@@ -213,7 +217,7 @@ namespace RelatorioAlunos
                             {
                                 if (!aluno.Aprovado)
                                 {
-                                    ImprimirResumoAluno(aluno);
+                                    ImprimirResumoAluno(aluno, tipoDeEnsino, auxiliarTipoDeEnsino);
                                 }
                             }
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
@@ -234,7 +238,7 @@ namespace RelatorioAlunos
 
                             foreach (Aluno aluno in BuscaMatricula(matriculaAPesquisar, alunos))
                             {
-                                ImprimirResumoAluno(aluno);
+                                ImprimirResumoAluno(aluno, tipoDeEnsino, tipoDeEnsino);
                                 Console.WriteLine($"NOTAS\nPrimeria prova: {aluno.PrimeiraProva}\nSegunda prova: {aluno.SegundaProva}");
                             }
                             continuar = ObtenhaMenuDeContinuacao().ToUpper();
@@ -315,11 +319,31 @@ namespace RelatorioAlunos
                 }
             }
         }
-        public static void ImprimirResumoAluno(Aluno aluno)
+        public static void ImprimirResumoAluno(Aluno aluno, bool opcaoDeEnsino, bool isBasico)
         {
-            Console.WriteLine();
-            Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}");
-            Console.WriteLine();
+            if (isBasico)
+            {
+                var ImprimirAlunoBasico = aluno as AlunoEnsinoBasico;
+                if (opcaoDeEnsino && aluno is AlunoEnsinoBasico)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}\n" +
+                        $"Serie: {ImprimirAlunoBasico?.Serie} - Responsavel: {ImprimirAlunoBasico?.Responsavel}");
+                    Console.WriteLine();
+                }
+            }
+            if (!isBasico)
+            {
+                var ImprimirAlunoSuperior = aluno as AlunoEnsinoSuperior;
+                if (!opcaoDeEnsino && aluno is AlunoEnsinoSuperior)
+                {
+                    Console.WriteLine();
+                    Console.WriteLine($"Matricula: {aluno.Matricula} - Aluno: {aluno.Nome} - Media: {aluno.Media}\n" +
+                        $"Turno das aulas: {ImprimirAlunoSuperior?.TurnoDasAulas} - Periodo: {ImprimirAlunoSuperior?.Periodo}");
+                    Console.WriteLine();
+                }
+
+            }
         }
         public static void ImprimirMenuAprovacao(string texto)
         {
@@ -362,7 +386,3 @@ namespace RelatorioAlunos
 /// 3- Downcast
 /// 4- Generics OK
 /// 5- linq OK
-
-/// Coisas a se fazer:
-/// focar nos casts (ROLOU DE FAZER O CAST AGORA É SO USAR)
-/// parar de ser limitado e conseguir fazer a coisa a cima (❁´◡`❁)
