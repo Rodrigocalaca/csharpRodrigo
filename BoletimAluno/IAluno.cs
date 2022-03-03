@@ -74,10 +74,10 @@ namespace boletimAluno
             Console.WriteLine("================================================");
             Console.WriteLine();
         }
-        public static IEnumerable<Aluno> BuscaMatricula(string matricula, List<Aluno> alunosT)
+        public static IEnumerable<Aluno> BuscaMatricula(string matricula, List<Aluno> alunos)
         {
             IEnumerable<Aluno> alunoBuscado =
-               from aluno in alunosT
+               from aluno in alunos
                where aluno.Matricula == matricula
                select aluno;
 
@@ -98,6 +98,27 @@ namespace boletimAluno
                     break;
             }
             return "0";
+        }
+        public static void ImprimaConsultaGeralDaTurma(List<Aluno> alunos, bool tipoDeEnsino)
+        {
+            string texto = "Alunos Aprovados";
+            IAluno.ImprimirMenuAprovacao(texto);
+            foreach (Aluno aluno in alunos)
+            {
+                if (aluno.Aprovado)
+                {
+                    IAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
+                }
+            }
+            texto = "Alunos Reprovados";
+            IAluno.ImprimirMenuAprovacao(texto);
+            foreach (Aluno aluno in alunos)
+            {
+                if (!aluno.Aprovado)
+                {
+                    IAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
+                }
+            }
         }
     }
 }

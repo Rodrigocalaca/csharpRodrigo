@@ -223,47 +223,13 @@ namespace RelatorioAlunos
 
                             if (tipoDeEnsino)
                             {
-                                string texto = "Alunos Aprovados";
-                                IAluno.ImprimirMenuAprovacao(texto);
-                                foreach (Aluno aluno in alunos)
-                                {
-                                    if (aluno.Aprovado)
-                                    {
-                                        IAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
-                                    }
-                                }
-                                texto = "Alunos Reprovados";
-                                IAluno.ImprimirMenuAprovacao(texto);
-                                foreach (Aluno aluno in alunos)
-                                {
-                                    if (!aluno.Aprovado)
-                                    {
-                                        IAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
-                                    }
-                                }
+                                IAluno.ImprimaConsultaGeralDaTurma(alunos, tipoDeEnsino);
                                 continuar = IAluno.ObtenhaMenuDeContinuacao().ToUpper();
                                 opcaoMenu = IAluno.SwitchCaseDoMenu(continuar, "2");
                             }
                             else if (!tipoDeEnsino)
                             {
-                                string texto = "Alunos Aprovados";
-                                IAluno.ImprimirMenuAprovacao(texto);
-                                foreach (Aluno aluno in alunos)
-                                {
-                                    if (aluno.Aprovado)
-                                    {
-                                        IAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
-                                    }
-                                }
-                                texto = "Alunos Reprovados";
-                                IAluno.ImprimirMenuAprovacao(texto);
-                                foreach (Aluno aluno in alunos)
-                                {
-                                    if (!aluno.Aprovado)
-                                    {
-                                        IAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
-                                    }
-                                }
+                                IAluno.ImprimaConsultaGeralDaTurma(alunos, tipoDeEnsino);
                                 continuar = IAluno.ObtenhaMenuDeContinuacao().ToUpper();
                                 opcaoMenu = IAluno.SwitchCaseDoMenu(continuar, "2");
                             }
@@ -319,6 +285,10 @@ namespace RelatorioAlunos
                         opcaoMenu = IAluno.ObtenhaOpcaoSelecionada();
                         break;
                 }
+            }
+            if(opcaoMenu.ToUpper() == "X")
+            {
+                Console.WriteLine("Finalizando a aplicacao");
             }
         }       
     }
