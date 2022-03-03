@@ -74,11 +74,10 @@ namespace boletimAluno
             Console.WriteLine("================================================");
             Console.WriteLine();
         }
-        public static Aluno BuscaMatricula(string? matricula, List<Aluno> alunos)
+        public static bool AchaMatricula(string matricula, List<Aluno> alunos)
         {
-            Aluno? alunoBuscado = alunos.FirstOrDefault(aluno => aluno.Matricula == matricula);
-
-            return alunoBuscado;
+            if(alunos.Exists(aluno => aluno.Matricula == matricula)) { return true; }
+            else { return false; }        
         }
         public static string SwitchCaseDoMenu(string opcaoDigitada, string opcaoDoMenu)
         {
@@ -116,6 +115,66 @@ namespace boletimAluno
                     MetodosDeAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
                 }
             }
+        }
+        public static string ImprimaMenuOpcaoDeEnsino()
+        {
+            Console.WriteLine("---------------------------");
+            Console.WriteLine("[1] - Aluno Ensino Básico\n[2] - Aluno Ensino Superior");
+            Console.WriteLine("---------------------------");
+            string opcaoDoMenuDeEnsino = Console.ReadLine()?.Trim() ?? string.Empty;
+
+            return opcaoDoMenuDeEnsino;
+        }
+        public static string PegaMatricula()
+        {
+            Console.Write("Digite a matricula: ");
+            string matricula = Console.ReadLine()?.Trim() ?? string.Empty;
+
+            return matricula;
+        }
+
+        public static string PegaNome()
+        {
+            Console.Write("Digite o nome: ");
+            string nomeAluno = Console.ReadLine()?.Trim() ?? "";
+
+            return nomeAluno;
+        }
+
+        public static string PegaSerie()
+        {
+            Console.Write("Série: ");
+            string serie = Console.ReadLine()?.Trim() ?? string.Empty;
+
+            return serie;
+        }
+        public static string PegaResponsavel()
+        {
+            Console.Write("Nome do responsável: ");
+            string responsavel = Console.ReadLine()?.Trim() ?? string.Empty;
+
+            return responsavel;
+        }
+        public static string PegaPeriodo()
+        {
+            Console.Write("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
+            string periodo = Console.ReadLine()?.Trim() ?? string.Empty;
+
+            return periodo;
+        }
+        public static string ConfereAlunos()
+        {
+            Console.WriteLine("Não há nenhum aluno cadastrado");
+            string opcaoMenu = MetodosDeAluno.ObtenhaOpcaoSelecionada();
+
+            return opcaoMenu;
+        }
+        public static string CasoContinuar(string texto)
+        {
+            string continuar = MetodosDeAluno.ObtenhaMenuDeContinuacao().ToUpper();
+            string opcaoMenu = MetodosDeAluno.SwitchCaseDoMenu(continuar, texto);
+
+            return opcaoMenu;
         }
     }
 }
