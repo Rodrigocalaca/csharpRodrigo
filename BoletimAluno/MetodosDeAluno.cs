@@ -15,7 +15,7 @@ namespace boletimAluno
             Console.WriteLine("[X] - Sair");
             Console.WriteLine("----------------------------------");
 
-            string? opcaoMenu = Console.ReadLine() ?? "";
+            string opcaoMenu = Console.ReadLine()?.Trim() ?? String.Empty;
 
             return opcaoMenu;
         }
@@ -30,7 +30,7 @@ namespace boletimAluno
                 Console.WriteLine("[X] - Sair do programa");
                 Console.WriteLine("----------------------------------");
 
-                string? validarResposta = Console.ReadLine();
+                string validarResposta = Console.ReadLine()?.Trim() ?? String.Empty;
 
                 if (validarResposta != null)
                 {
@@ -72,6 +72,11 @@ namespace boletimAluno
             Console.WriteLine($"{texto}");
             Console.WriteLine("================================================");
             Console.WriteLine();
+        }
+        public static IEnumerable<out T> MetodoDeBusca()
+        {           
+            IEnumerable<string> valorASerBuscado;
+            
         }
         public static bool AchaMatricula(string matricula, List<Aluno> alunos)
         {
@@ -135,7 +140,7 @@ namespace boletimAluno
         public static string PegaNome()
         {
             Console.Write("Digite o nome: ");
-            string nomeAluno = Console.ReadLine()?.Trim() ?? "";
+            string nomeAluno = Console.ReadLine()?.Trim() ?? String.Empty;
 
             return nomeAluno;
         }

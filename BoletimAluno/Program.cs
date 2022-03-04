@@ -79,6 +79,7 @@ namespace RelatorioAlunos
                             }
                             AlunoEnsinoBasico novoAluno = new(nomeAluno, nota1, nota2, matricula, serie, responsavel);
                             alunos.Add(novoAluno);
+
                         }
                         else if (opcaoDoMenuDeEnsino == "2")
                         {

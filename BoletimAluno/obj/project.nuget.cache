@@ -1,8 +1,20 @@
 {
   "version": 2,
-  "dgSpecHash": "xSIDVOJN3LMBBFsmu5tiFPEq1Vx1PxFbqpDYzb3B85100VXTmtTOKtwx8rOpKdLXvapdBH0wdsl0xp6jNSGzvg==",
+  "dgSpecHash": "ss5sZDzesSGzKZHdHpSqYG1NVE8/gl5ddOjMC3VJ2sbERJtFoeyVzrMa5FUE3xDjVIsZgpHJHhtlsbPg+VJM1w==",
   "success": true,
   "projectFilePath": "C:\\Users\\EscolarManager\\Desktop\\Projetos\\BoletimAluno\\BoletimAluno.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\microsoft.netcore.platforms\\2.0.0\\microsoft.netcore.platforms.2.0.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\microsoft.win32.systemevents\\4.5.0\\microsoft.win32.systemevents.4.5.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\npoi\\2.5.5\\npoi.2.5.5.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\portable.bouncycastle\\1.8.9\\portable.bouncycastle.1.8.9.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\sharpziplib\\1.3.2\\sharpziplib.1.3.2.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\system.configuration.configurationmanager\\4.5.0\\system.configuration.configurationmanager.4.5.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\system.drawing.common\\4.5.0\\system.drawing.common.4.5.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\system.security.accesscontrol\\4.5.0\\system.security.accesscontrol.4.5.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\system.security.cryptography.protecteddata\\4.5.0\\system.security.cryptography.protecteddata.4.5.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\system.security.permissions\\4.5.0\\system.security.permissions.4.5.0.nupkg.sha512",
+    "C:\\Users\\EscolarManager\\.nuget\\packages\\system.security.principal.windows\\4.5.0\\system.security.principal.windows.4.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

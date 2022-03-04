@@ -39,6 +39,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "NPOI": {
+              "target": "Package",
+              "version": "[2.5.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
