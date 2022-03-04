@@ -4,11 +4,10 @@ namespace boletimAluno
 {
     public static class MetodosDeAluno
     {
-        public static string ObtenhaOpcaoSelecionada()
+        public static string ObtenhaOpcaoMenuPrincipal()
         {
 
-            Console.WriteLine("----------------------------------");
-            Console.WriteLine("Digite a opcao desejada: ");
+            Console.WriteLine("---------------MENU---------------");;
             Console.WriteLine("[1] - Adicionar aluno");
             Console.WriteLine("[2] - Consulta geral da turma");
             Console.WriteLine("[3] - Buscar aluno");
@@ -47,7 +46,7 @@ namespace boletimAluno
                 }
             }
         }
-        public static void ImprimirResumoAluno(Aluno aluno, string tipoDeEnsino)
+        public static void ImprimaResumoAluno(Aluno aluno, string tipoDeEnsino)
         {
             if (tipoDeEnsino == "1")
             {
@@ -67,7 +66,7 @@ namespace boletimAluno
 
             }
         }
-        public static void ImprimirMenuAprovacao(string texto)
+        public static void ImprimaCabecalhoAprovacao(string texto)
         {
             Console.WriteLine();
             Console.WriteLine($"{texto}");
@@ -86,7 +85,7 @@ namespace boletimAluno
                 case "1":
                     return opcaoDoMenu;
                 case "2":
-                    return ObtenhaOpcaoSelecionada();
+                    return ObtenhaOpcaoMenuPrincipal();
                 case "X":
                     return "X";
                 default:
@@ -98,21 +97,21 @@ namespace boletimAluno
         public static void ImprimaConsultaGeralDaTurma(List<Aluno> alunos, string tipoDeEnsino)
         {
             string texto = "Alunos Aprovados";
-            MetodosDeAluno.ImprimirMenuAprovacao(texto);
+            MetodosDeAluno.ImprimaCabecalhoAprovacao(texto);
             foreach (Aluno aluno in alunos)
             {
                 if (aluno.Aprovado)
                 {
-                    MetodosDeAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
+                    MetodosDeAluno.ImprimaResumoAluno(aluno, tipoDeEnsino);
                 }
             }
             texto = "Alunos Reprovados";
-            MetodosDeAluno.ImprimirMenuAprovacao(texto);
+            MetodosDeAluno.ImprimaCabecalhoAprovacao(texto);
             foreach (Aluno aluno in alunos)
             {
                 if (!aluno.Aprovado)
                 {
-                    MetodosDeAluno.ImprimirResumoAluno(aluno, tipoDeEnsino);
+                    MetodosDeAluno.ImprimaResumoAluno(aluno, tipoDeEnsino);
                 }
             }
         }
@@ -157,7 +156,7 @@ namespace boletimAluno
         }
         public static string PegaPeriodo()
         {
-            Console.Write("Periodo de curso: Ex.: [1º Periodo/2º Periodo]");
+            Console.Write("Periodo de curso: Ex.: [1º Periodo/2º Periodo]: ");
             string periodo = Console.ReadLine()?.Trim() ?? string.Empty;
 
             return periodo;
@@ -165,7 +164,7 @@ namespace boletimAluno
         public static string ConfereAlunos()
         {
             Console.WriteLine("Não há nenhum aluno cadastrado");
-            string opcaoMenu = MetodosDeAluno.ObtenhaOpcaoSelecionada();
+            string opcaoMenu = MetodosDeAluno.ObtenhaOpcaoMenuPrincipal();
 
             return opcaoMenu;
         }
@@ -175,6 +174,38 @@ namespace boletimAluno
             string opcaoMenu = MetodosDeAluno.SwitchCaseDoMenu(continuar, texto);
 
             return opcaoMenu;
+        }
+        public static double TryCatchDasNotas()
+        {
+            while (true)
+            {
+                try
+                {
+                    double nota = double.Parse(Console.ReadLine() ?? "");
+                    return nota;
+                }
+                catch (Exception)
+                {
+                    Console.Write("Insira uma nota válida\nNota 2: ");
+                }
+            }
+        }
+        public static double PegaNotaValida(double nota, string texto)
+        {
+            while (nota < 0 || nota > 10)
+            {
+                Console.WriteLine("Insira uma nota válida");
+                Console.Write($"{texto}: ");
+                nota = double.Parse(Console.ReadLine() ?? "");
+            }
+            return nota;
+        }
+
+        public static List<Aluno> OrdenaAlunos(List<Aluno> alunos)
+        {
+            List<Aluno> alunosOrdenadosPorNota = alunos.OrderBy(aluno => aluno.Media).ToList();
+
+            return alunosOrdenadosPorNota;
         }
     }
 }

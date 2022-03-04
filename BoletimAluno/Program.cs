@@ -23,9 +23,7 @@ namespace RelatorioAlunos
                     opcaoDoMenuDeEnsino = MetodosDeAluno.ImprimaMenuOpcaoDeEnsino();
                 }
             }
-
-            string opcaoMenu = MetodosDeAluno.ObtenhaOpcaoSelecionada().ToUpper();
-
+            string opcaoMenu = MetodosDeAluno.ObtenhaOpcaoMenuPrincipal().ToUpper();
             while (opcaoMenu.ToUpper() != "X")
             {
                 switch (opcaoMenu)
@@ -35,7 +33,7 @@ namespace RelatorioAlunos
                         string matricula = MetodosDeAluno.PegaMatricula();
                         while (!Int32.TryParse(matricula, out validacaoNumeroInteiro))
                         {
-                            Console.Write("A matricula precisa ser um número");
+                            Console.WriteLine("A matricula precisa ser um número");
                             matricula = MetodosDeAluno.PegaMatricula();
                         }
                         foreach (Aluno aluno in alunos)
@@ -59,61 +57,19 @@ namespace RelatorioAlunos
                             nomeAluno = MetodosDeAluno.PegaNome();
                         }                  
                         Console.Write("Nota 1: ");
-                        double nota1 = 0;
-                        while (true)
-                        {
-                            try
-                            {
-                                nota1 = double.Parse(Console.ReadLine() ?? "");
-                                break;
-                            }
-                            catch (Exception)
-                            {
-                                Console.Write("Insira uma nota válida\nNota 1: ");
-                            }
-                        }
-                        while (nota1 < 0 || nota1 > 10)
-                        {
-                            Console.WriteLine("Insira uma nota válida");
-                            Console.Write("Nota 1: ");
-                            nota1 = double.Parse(Console.ReadLine() ?? "");
-
-                        }
+                        double nota1 = MetodosDeAluno.TryCatchDasNotas();
+                        nota1 = MetodosDeAluno.PegaNotaValida(nota1, "Nota 1");
                         Console.Write("Nota 2: ");
-                        double nota2 = 0;
-                        while (true)
-                        {
-                            try
-                            {
-                                nota2 = double.Parse(Console.ReadLine() ?? "");
-                                break;
-                            }
-                            catch (Exception)
-                            {
-                                Console.Write("Insira uma nota válida\nNota 2: ");
-                            }
-                        }
-                        while (nota2 < 0 || nota2 > 10)
-                        {
-                            Console.WriteLine("Insira uma nota válida");
-                            Console.Write("Nota 2: ");
-                            nota2 = double.Parse(Console.ReadLine()?.Trim() ?? "");
+                        double nota2 = MetodosDeAluno.TryCatchDasNotas();
+                        nota2 = MetodosDeAluno.PegaNotaValida(nota2, "Nota 2");
 
-                        }
                         if (opcaoDoMenuDeEnsino == "1")
                         {
                             string serie = MetodosDeAluno.PegaSerie();
-                            while (!Int32.TryParse(serie, out validacaoNumeroInteiro))
+                            while (!Int32.TryParse(serie, out validacaoNumeroInteiro) || validacaoNumeroInteiro >= 9 || validacaoNumeroInteiro <= 1)
                             {
                                 Console.WriteLine("Insira uma série valida");
                                 serie = MetodosDeAluno.PegaSerie();
-                            }
-                            int resultado = int.Parse(serie);
-                            while (resultado >= 9 || resultado <= 1)
-                            {
-                                Console.WriteLine("Insira uma série valida");
-                                serie = MetodosDeAluno.PegaSerie(); ;
-                                resultado = int.Parse(serie);
                             }
                             string responsavel = MetodosDeAluno.PegaResponsavel();
                             while (!Regex.IsMatch(responsavel, @"^[\p{L}\p{M}' \.\-]+$") || responsavel.Length < 1 || responsavel.Length > 100)
@@ -129,18 +85,12 @@ namespace RelatorioAlunos
                             string? turnoDasAulas = "";
                             while (true)
                             {
-                                Console.Write("Digite o periodo: [MATUTINO/NOTURNO]");
+                                Console.Write("Digite o periodo [MATUTINO/NOTURNO]: ");
                                 turnoDasAulas = Console.ReadLine()?.ToUpper() ?? "";
-                                if (turnoDasAulas == "MATUTINO")
+                                if (turnoDasAulas == "MATUTINO" || turnoDasAulas == "NOTURNO")
                                 {
-                                    Console.WriteLine($"Escolheu {turnoDasAulas}");
                                     break;
-                                }
-                                else if (turnoDasAulas == "NOTURNO")
-                                {
-                                    Console.WriteLine($"Escolheu {turnoDasAulas}");
-                                    break;
-                                }
+                                }                                
                                 else
                                 {
                                     Console.WriteLine("Digite um valor valido");
@@ -155,10 +105,10 @@ namespace RelatorioAlunos
                             AlunoEnsinoSuperior novoAluno = new(nomeAluno, nota1, nota2, matricula, turnoDasAulas, periodo);
                             alunos.Add(novoAluno);
                         }
-
                         opcaoMenu = MetodosDeAluno.CasoContinuar(opcaoMenu);
                         break;
                     case "2":
+                        alunos = MetodosDeAluno.OrdenaAlunos(alunos);
                         if (alunos.Count == 0)
                         {
                             opcaoMenu = MetodosDeAluno.ConfereAlunos();
@@ -186,7 +136,7 @@ namespace RelatorioAlunos
                         else
                         {
                             Console.Write("Digite a matricula do aluno que deseja buscar: ");
-                            string? matriculaAPesquisar = Console.ReadLine() ?? "";
+                            string? matriculaAPesquisar = Console.ReadLine()?.Trim() ?? string.Empty;
                             if (!MetodosDeAluno.AchaMatricula(matriculaAPesquisar, alunos))
                             {
                                 Console.WriteLine("O aluno não foi encontrado");
@@ -195,7 +145,7 @@ namespace RelatorioAlunos
                             {                               
                                 foreach (Aluno aluno in alunos.Where(aluno => aluno.Matricula == matriculaAPesquisar))
                                 {
-                                    MetodosDeAluno.ImprimirResumoAluno(aluno, opcaoDoMenuDeEnsino);
+                                    MetodosDeAluno.ImprimaResumoAluno(aluno, opcaoDoMenuDeEnsino);
                                 }
                             }
                             opcaoMenu = MetodosDeAluno.CasoContinuar(opcaoMenu);
@@ -225,7 +175,7 @@ namespace RelatorioAlunos
                         opcaoMenu = MetodosDeAluno.CasoContinuar(opcaoMenu);
                         break;
                     default:
-                        opcaoMenu = MetodosDeAluno.ObtenhaOpcaoSelecionada();
+                        opcaoMenu = MetodosDeAluno.ObtenhaOpcaoMenuPrincipal();
                         break;
                 }
             }
@@ -233,17 +183,17 @@ namespace RelatorioAlunos
             {
                 Console.WriteLine("Finalizando a aplicacao");
             }
-        }        
+        }       
     }
 }
 
-/// refatorar o codigo, usando melhor o DONT REPET YOURSELF
+/// refatorar o codigo, usando melhor o DONT REPET YOURSELF - OK
 /// usar mais linq's, upcast e downcast
-/// estudar sobre boxing e unboxing
+/// estudar sobre boxing e unboxing - OK
 
 
 /// Coisas a refatorar:
 /// if(alunos.Count == 0)... No começo de cada switch case - OK
 /// "digite o nome, digite a matricula" - OK
 /// menu de opcao de ensino - OK
-/// arrumar a questão do trycatch nas notas 
+/// arrumar a questão do trycatch nas notas - OK
