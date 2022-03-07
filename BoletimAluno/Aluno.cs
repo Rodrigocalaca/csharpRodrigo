@@ -7,7 +7,7 @@
         private readonly double nota1;
         private readonly double nota2;
 
-        
+
 
         public Aluno()
         {
@@ -25,13 +25,13 @@
         public string Nome => _nome;
 
         public string Matricula => _matricula;
-        
+
         public double PrimeiraProva => nota1;
 
         public double SegundaProva => nota2;
 
         public double Media => (nota1 + nota2) / 2;
 
-        public bool Aprovado => Media >= 6;       
+        public bool Aprovado => Media >= 6;
     }
 }
